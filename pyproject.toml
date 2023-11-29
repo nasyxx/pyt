@@ -1,30 +1,18 @@
-[tool.pdm]
-[tool.pdm.build]
-includes = ["src/XX"]
-package-dir = "src/XX"
-
-[tool.pdm.dev-dependencies]
 [project]
-name = "nasy_pyt"
+name = "pyt"
 version = "0.1.0"
-description = "desc"
+description = "pyt"
 authors = [
     {name = "Nasy", email = "nasyxx+python@gmail.com"},
 ]
 dependencies = []
-requires-python = ">=3.11"
-# readme = "README.org"
+requires-python = ">=3.11,<3.12"
+readme = "README.md"
 license = {text = "GPLv3"}
 
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
-
-
-# [[tool.pdm.source]]
-# url = "https://download.pytorch.org/whl/cu118"
-# verify_ssl = true
-# name = "torch"
 
 [[tool.pdm.source]]
 url = "https://storage.googleapis.com/jax-releases/jax_cuda_releases.html"
@@ -33,10 +21,10 @@ verify_ssl = true
 type = "find_links"
 
 [tool.mypy]
-mypy_path = "./__types"
+mypy_path = "./typings"
 exclude = [
   "__pypackages__/",
-  "./__types",  # for pyright autogen stubs
+  "./typings",  # for pyright autogen stubs
 ]
 
 follow_imports_for_stubs = true
@@ -60,7 +48,7 @@ strict_optional = true
 
 
 warn_redundant_casts = true
-warn_unused_ignores = true
+warn_unused_ignores = false
 warn_no_return = false
 warn_return_any = false
 warn_unreachable = true
@@ -76,58 +64,13 @@ strict = true
 
 warn_unused_configs = true
 
-[tool.isort]
-py_version = "auto"
-
-# profile = "black"
-group_by_package = true
-color_output = true
-combine_straight_imports = true
-
-import_heading_stdlib = "Standard Library"
-
-
-known_db = ["sqlite", "shelve"]
-import_heading_db = "Database"
-
-known_tf = ["tensorflow", "keras"]
-import_heading_tf = "Tensorflow"
-
-known_torch = ["torch", "torchdata", "torchvision", "pytorch_lightning"]
-import_heading_torch = "Torch"
-
-known_jax = ["jax", "haiku", "flax", "optax", "jraph", "chex", "jaxopt"]
-import_heading_jax = "JAX"
-
-known_types = ["typing", "types", "jax.typing", "jaxtyping", "numpy.typing", "typing_extensions"]
-import_heading_types = "Types"
-
-known_config = ["config", "settings", "cfg", "tyro"]
-import_heading_config = "Config"
-
-known_math = ["numpy", "scipy", "sklearn", "pandas", "geoopt"]
-import_heading_math = "Math"
-
-known_plot = ["matplotlib"]
-import_heading_plot = "Plot"
-
-import_heading_thirdparty = "Others"
-
-import_heading_localfolder = "Local"
-known_localfolder = ["sites", "src"]
-
-import_heading_utils = "Utils"
-known_utils = ["tqdm", "rich"]
-
-sections = ["FUTURE", "FIRSTPARTY", "STDLIB", "TYPES", "UTILS", "DB", "MATH", "PLOT", "TF", "TORCH", "JAX", "CONFIG", "THIRDPARTY", "LOCALFOLDER"]
-
-
 [tool.pyright]
 pythonVersion = "3.11"
 extraPaths = [
   "__pypackages__/3.9/lib",
   "__pypackages__/3.10/lib",
   "__pypackages__/3.11/lib",
+  "__pypackages__/3.12/lib",
   "src",
 ]
 
@@ -140,26 +83,40 @@ useLibraryCodeForTypes = true
 
 [tool.ruff]
 
-exclude = [ "__types"]
+exclude = [ "./typings" ]
 
 fix = false
 unfixable = ["F401", "F841", "C417"]
-format = "grouped"
+output-format = "grouped"
 # show-source = true
 
-select = [ "ALL" ]
+select = ["ALL"]
 ignore = [
-  "ANN101", "C417", "COM812", "D203", "D213",
+  "ANN101", "C417", "COM812", "D203", "D213", "E401",
   "FBT002", "EM102", "ERA001", "EXE001", "FBT001",
   "I001", "PD", "S101", "SLF001", "TRY003", "UP009",
-  "EM101",
+  "EM101", "T201", "PGH003", "ISC001"
 ]
 
+indent-width = 2
 # show-fixes = true
+
+[tool.ruff.isort]
+section-order = ["future", "standard-library", "first-party", "tf", "torch", "jax", "types", "math", "database", "third-party", "config", "local-folder"]
+
+[tool.ruff.isort.sections]
+database = ["lucene", "lupyne", "elasticsearch", "sqlite", "shelve"]
+tf = ["tensorflow", "keras"]
+torch = ["torch", "torchdata", "torchvision", "pytorch_lightning"]
+jax = ["jax", "haiku", "flax", "optax", "jraph", "chex", "jaxopt"]
+types = ["typing", "types", "jax.typing", "jaxtyping", "numpy.typing", "typing_extensions"]
+math = ["numpy", "scipy", "sklearn", "pandas"]
+config = ["config", "settings", "cfg", "smile_config", "tyro"]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = [ "D104" ]
 "__version__.py" = [ "D100" ]
+"sites/*.py" = [ "INP001" ]
 
 [tool.ruff.pylint]
 max-args = 10
@@ -171,3 +128,8 @@ max-complexity = 15
 [tool.pyink]
 pyink_indentation = 2
 preview = true
+
+[tool.yapf]
+based_on_style = "yapf"
+column_limit = 88
+allow_multiline_lambdas = true
