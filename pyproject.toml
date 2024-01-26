@@ -113,6 +113,10 @@ types = ["typing", "types", "jax.typing", "jaxtyping", "numpy.typing", "typing_e
 math = ["numpy", "scipy", "sklearn", "pandas"]
 config = ["config", "settings", "cfg", "smile_config", "tyro"]
 
+[tool.ruff.format]
+docstring-code-format = true
+preview = true
+
 [tool.ruff.per-file-ignores]
 "__init__.py" = [ "D104" ]
 "__version__.py" = [ "D100" ]
