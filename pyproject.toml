@@ -90,7 +90,7 @@ output-format = "grouped"
 
 select = ["ALL"]
 ignore = [
-  "ANN101", "C417", "COM812", "D203", "D213", "E401",
+  "ANN101", "C417", "COM812", "D203", "D213", "D401", "E401",
   "FBT002", "EM102", "ERA001", "EXE001", "FBT001",
   "I001", "PD", "S101", "SLF001", "TRY003", "UP009",
   "EM101", "T201", "PGH003", "ISC001"
