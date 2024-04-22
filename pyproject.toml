@@ -72,7 +72,6 @@ line-length = 88
 output-format = "grouped"
 preview = true
 show-fixes = true
-tab-size = 2
 unsafe-fixes = true
 
 [tool.ruff.format]
@@ -82,10 +81,11 @@ preview = true
 
 [tool.ruff.lint]
 ignore = [
-  "ANN101", "C417", "COM812", "D203", "D213", "D401", "E401",
-  "FBT002", "EM102", "ERA001", "EXE001", "FBT001",
+  "ANN101", "C417", "COM812", "D203", "D213", "D401",
+  "E111", "E114", "E401", "EM101", "EM102", "ERA001", "EXE001",
+  "FBT002", "FBT001",
   "I001", "PD", "S101", "SLF001", "TRY003", "UP009",
-  "EM101", "T201", "PGH003", "ISC001"
+  "T201", "PGH003", "ISC001"
 ]
 preview = true
 select = ["ALL"]
@@ -96,10 +96,10 @@ unfixable = [
   "C417"   # map
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "first-party", "tf", "torch", "jax", "types", "math", "database", "third-party", "config", "local-folder"]
 
-[tool.ruff.isort.sections]
+[tool.ruff.lint.isort.sections]
 database = ["lucene", "lupyne", "elasticsearch", "sqlite", "shelve"]
 tf = ["tensorflow", "keras"]
 torch = ["torch", "torchdata", "torchvision", "pytorch_lightning"]
@@ -108,14 +108,14 @@ types = ["typing", "types", "jax.typing", "jaxtyping", "numpy.typing", "typing_e
 math = ["numpy", "scipy", "sklearn", "pandas"]
 config = ["config", "settings", "cfg", "smile_config", "tyro"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = [ "D104" ]
 "__version__.py" = [ "D100" ]
 "sites/*.py" = [ "INP001" ]
 
-[tool.ruff.pylint]
+[tool.ruff.lint.pylint]
 max-args = 10
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 # Flag errors (`C901`) whenever the complexity level exceeds 15.
 max-complexity = 15
